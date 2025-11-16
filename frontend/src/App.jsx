@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import ProfilePage from "./components/ProfilePage";
+import Signup from "./components/Signup";
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<DashboardWrapper />} />
-        {/* <Route path="/profile" element={<div>Profile Page</div>} /> */}
+        <Route path="/signup" element={<Signup />} /> 
         <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </Router>
