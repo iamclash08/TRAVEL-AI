@@ -3,6 +3,7 @@ from .views import RegisterView, GoogleLoginView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .views import google_login, hello_view
 from .views import SignupView
+#sangram
 
 urlpatterns = [
     path("register/", RegisterView.as_view(), name="register"),
