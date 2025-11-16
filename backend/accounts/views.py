@@ -6,7 +6,10 @@ from django.conf import settings
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
 from .serializers import RegisterSerializer
-
+from rest_framework.response import Response
+from rest_framework import status
+from django.contrib.auth.models import User
+import requests
 # google token verify
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
@@ -98,3 +101,23 @@ def google_login(request):
 @permission_classes([IsAuthenticated])
 def hello_view(request):
     return Response({"message": f"Hello {request.user.username}, you are authenticated!"})
+
+class SignupView(APIView):
+    def post(self, request):
+        username = request.data.get("username")
+        email = request.data.get("email")
+        password = request.data.get("password")
+
+        if not username or not password:
+            return Response({"detail": "Username and password required"}, status=400)
+
+        if User.objects.filter(username=username).exists():
+            return Response({"detail": "Username already exists"}, status=400)
+
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password
+        )
+
+        return Response({"detail": "User created successfully"}, status=201)
