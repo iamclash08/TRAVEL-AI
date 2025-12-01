@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../services/auth";
+import "../styles/Signup.css";
 
 export default function Signup() {
   const [username, setUsername] = useState("");
@@ -12,65 +13,56 @@ export default function Signup() {
   async function handleSignup(e) {
     e.preventDefault();
     try {
-      const response = await register(username, email, password);
-      console.log("Signup success:", response);
-      navigate("/"); // ✅ Go back to login after signup
+      await register(username, email, password);
+      navigate("/");
     } catch (err) {
       setError(err.response?.data?.detail || "Signup failed. Try again!");
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-300">
-      <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md">
-        {/* Title */}
-        <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
-          Create Account
-        </h2>
+    <div className="signup-container">
+      <div className="signup-card">
 
-        {/* Form */}
-        <form onSubmit={handleSignup} className="space-y-4">
+        <h2 className="signup-title">Create Account</h2>
+
+        <form onSubmit={handleSignup}>
           <input
             type="text"
             placeholder="Username"
             value={username}
+            className="signup-input"
             onChange={(e) => setUsername(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
           />
+
           <input
             type="email"
             placeholder="Email"
             value={email}
+            className="signup-input"
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
           />
+
           <input
             type="password"
             placeholder="Password"
             value={password}
+            className="signup-input"
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
           />
 
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+          {error && <p className="error-text">{error}</p>}
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300"
-          >
-            Sign Up
-          </button>
+          <button type="submit" className="signup-btn">Sign Up</button>
         </form>
 
-        <p className="mt-4 text-sm text-gray-600 text-center">
+        <p className="signup-footer">
           Already have an account?{" "}
-          <button
-            onClick={() => navigate("/")}
-            className="text-blue-600 hover:underline"
-          >
+          <button onClick={() => navigate("/")} className="link-btn">
             Login
           </button>
         </p>
+
       </div>
     </div>
   );

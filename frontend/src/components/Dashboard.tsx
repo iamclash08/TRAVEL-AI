@@ -1,6 +1,6 @@
-// src/pages/Dashboard.tsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "../styles/Dashboard.css";
 
 interface DashboardProps {
   user: { username: string };
@@ -9,57 +9,56 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    navigate("/");
+  };
+
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100">
+    <div className="dashboard-container">
       {/* Navbar */}
-      <nav className="bg-blue-600 text-white px-6 py-4 flex justify-between items-center shadow-md">
-        <div className="text-lg font-bold">TravelAI</div>
-        <div className="flex items-center gap-6">
+      <nav className="dashboard-navbar">
+        <div className="navbar-title">TravelAI</div>
+        <div className="navbar-user">
           <span>Logged in as: <strong>{user?.username}</strong></span>
-          <button
-            onClick={() => navigate("/profile", { state: { user } })}
-          >
+        </div>
+        <div className="navbar-right">
+          <button onClick={() => navigate("/profile", { state: { user } })}>
             Profile
+          </button>
+          <button className="logout-btn" onClick={handleLogout}>
+            Logout
           </button>
         </div>
       </nav>
 
       {/* Content */}
-      <div className="flex flex-1">
+      <div className="dashboard-body">
+        
         {/* Chatbot Section */}
-        <div className="w-2/3 p-6 border-r bg-white">
-          <h2 className="text-xl font-semibold mb-4">Chatbot</h2>
-          <div className="h-[75vh] border rounded-lg p-4 overflow-y-auto bg-gray-50">
-            {/* Chatbot messages go here */}
-            <p className="text-gray-400">Start chatting with the bot...</p>
+        <div className="chat-section">
+          <h2 className="section-title">Chatbot</h2>
+
+          <div className="chat-box">
+            <p className="chat-placeholder">Start chatting with the bot...</p>
           </div>
-          <div className="mt-4 flex">
-            <input
-              type="text"
-              placeholder="Type a message..."
-              className="flex-1 border rounded-l-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
-            />
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700 transition">
-              Send
-            </button>
+
+          <div className="chat-input">
+            <input type="text" placeholder="Type a message..." />
+            <button>Send</button>
           </div>
         </div>
 
         {/* Chat History Section */}
-        <div className="w-1/3 p-6 bg-gray-50">
-          <h2 className="text-xl font-semibold mb-4">Previous Chats</h2>
-          <ul className="space-y-3">
-            <li className="p-3 bg-white rounded-lg shadow hover:bg-gray-100 cursor-pointer">
-              Chat Session 1
-            </li>
-            <li className="p-3 bg-white rounded-lg shadow hover:bg-gray-100 cursor-pointer">
-              Chat Session 2
-            </li>
-            <li className="p-3 bg-white rounded-lg shadow hover:bg-gray-100 cursor-pointer">
-              Chat Session 3
-            </li>
+        <div className="history-section">
+          <h2 className="section-title">Previous Chats</h2>
+          <ul className="history-list">
+            <li className="history-item">Chat Session 1</li>
+            <li className="history-item">Chat Session 2</li>
+            <li className="history-item">Chat Session 3</li>
           </ul>
         </div>
+
       </div>
     </div>
   );
