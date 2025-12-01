@@ -138,5 +138,4 @@ SIMPLE_JWT = {
 }
 
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "")
-
-GOOGLE_CLIENT_ID='587595740893-g3it62i26n785ed4vaei.apps.googleusercontent.com'
+GOOGLE_CLIENT_ID = "587595740893-o5hqb0fa3083di1h782n4mf5m2dfe747.apps.googleusercontent.com"
